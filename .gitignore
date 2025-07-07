@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/
+
+# Django
+*.sqlite3
+media/
+
+# Node
+node_modules/
+frontend/dist/
+.pnpm-store/
+
+# Docker
+*.env
+
+# OS / IDE (see global gitignore for .DS_Store, .idea/, etc.)
