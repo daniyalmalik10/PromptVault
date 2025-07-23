@@ -25,3 +25,4 @@ frontend/dist/
 *.env
 
 # OS / IDE (see global gitignore for .DS_Store, .idea/, etc.)
+IMPLEMENTATION_PLAN.md
