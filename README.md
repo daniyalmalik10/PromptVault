@@ -11,18 +11,9 @@ Save prompts, run them against Groq or OpenRouter, and track every execution —
 - **LLM Providers:** Groq, OpenRouter (both free tier, OpenAI-compatible)
 - **Infra:** Docker Compose + GitHub Actions CI
 
-## Local setup
-
-```bash
-cp .env.example .env          # fill in GROQ_API_KEY and OPENROUTER_API_KEY
-docker compose up --build
-```
-
-API at `http://localhost:8000` · UI at `http://localhost:5173`
-
 ## Architecture
 
-See [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md) for a full phase-by-phase build plan.
+See [removed files] for a full phase-by-phase build plan.
 
 ```mermaid
 graph LR
