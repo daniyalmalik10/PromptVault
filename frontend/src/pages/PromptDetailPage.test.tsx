@@ -15,6 +15,12 @@ vi.mock("react-router-dom", async (importOriginal) => {
 });
 
 vi.mock("../api/prompts");
+vi.mock("../components/ExecutionPanel", () => ({
+  default: () => <div data-testid="execution-panel" />,
+}));
+vi.mock("../components/ExecutionHistory", () => ({
+  default: () => <div data-testid="execution-history" />,
+}));
 
 import { promptsApi } from "../api/prompts";
 import PromptDetailPage from "./PromptDetailPage";
@@ -112,5 +118,20 @@ describe("PromptDetailPage", () => {
     await userEvent.click(screen.getByRole("button", { name: /delete/i }));
     await userEvent.click(screen.getByRole("button", { name: /cancel/i }));
     expect(screen.queryByText(/delete\?/i)).not.toBeInTheDocument();
+  });
+
+  it("renders ExecutionPanel and ExecutionHistory in view mode", async () => {
+    renderPage();
+    await waitFor(() => screen.getByText("Test Prompt"));
+    expect(screen.getByTestId("execution-panel")).toBeInTheDocument();
+    expect(screen.getByTestId("execution-history")).toBeInTheDocument();
+  });
+
+  it("hides ExecutionPanel and ExecutionHistory while editing", async () => {
+    renderPage();
+    await waitFor(() => screen.getByText("Test Prompt"));
+    await userEvent.click(screen.getByRole("button", { name: /edit/i }));
+    expect(screen.queryByTestId("execution-panel")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("execution-history")).not.toBeInTheDocument();
   });
 });

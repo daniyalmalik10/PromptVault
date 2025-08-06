@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { promptsApi, type Prompt } from "../api/prompts";
+import ExecutionHistory from "../components/ExecutionHistory";
+import ExecutionPanel from "../components/ExecutionPanel";
 
 export default function PromptDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -12,6 +14,7 @@ export default function PromptDetailPage() {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [executionRefreshTick, setExecutionRefreshTick] = useState(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Edit form state
@@ -228,6 +231,18 @@ export default function PromptDetailPage() {
               <span>Updated {new Date(prompt.updated_at).toLocaleString()}</span>
             </div>
           </div>
+        )}
+
+        {!isEditing && prompt && (
+          <>
+            <ExecutionPanel
+              promptId={prompt.id}
+              onExecutionComplete={() => setExecutionRefreshTick((t) => t + 1)}
+            />
+            <div className="mt-4">
+              <ExecutionHistory promptId={prompt.id} refreshTick={executionRefreshTick} />
+            </div>
+          </>
         )}
       </div>
     </div>

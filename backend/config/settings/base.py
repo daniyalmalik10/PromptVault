@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     # Local
     "apps.users",
     "apps.prompts",
+    "apps.providers",
+    "apps.executions",
 ]
 
 MIDDLEWARE = [
