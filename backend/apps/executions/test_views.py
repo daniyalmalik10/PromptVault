@@ -1,4 +1,4 @@
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import MagicMock, patch
 
 from apps.executions.models import Execution
 from apps.prompts.models import Prompt
@@ -10,7 +10,7 @@ EXECUTIONS_URL = "/api/executions/"
 
 def mock_provider(text="The answer.", input_tokens=5, output_tokens=10, latency_ms=200):
     provider = MagicMock()
-    provider.complete = AsyncMock(
+    provider.complete = MagicMock(
         return_value=CompletionResult(
             text=text,
             input_tokens=input_tokens,
@@ -79,7 +79,7 @@ class TestExecutionCreate:
 
     def test_provider_error_saves_error_execution(self, auth_client, prompt):
         failing = MagicMock()
-        failing.complete = AsyncMock(
+        failing.complete = MagicMock(
             side_effect=ProviderError("Rate limit exceeded", status_code=429)
         )
         with patch("apps.executions.views.registry.get", return_value=failing):
@@ -95,7 +95,7 @@ class TestExecutionCreate:
 
     def test_unexpected_error_saves_error_execution(self, auth_client, prompt):
         failing = MagicMock()
-        failing.complete = AsyncMock(side_effect=RuntimeError("Connection timeout"))
+        failing.complete = MagicMock(side_effect=RuntimeError("Connection timeout"))
         with patch("apps.executions.views.registry.get", return_value=failing):
             res = auth_client.post(
                 EXECUTIONS_URL,

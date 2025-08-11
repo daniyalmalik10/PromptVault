@@ -13,7 +13,7 @@ class GroqProvider(LLMProvider):
     def __init__(self, api_key: str | None = None) -> None:
         self._api_key = api_key or settings.GROQ_API_KEY
 
-    async def complete(
+    def complete(
         self,
         prompt_text: str,
         model: str,
@@ -29,8 +29,8 @@ class GroqProvider(LLMProvider):
             "max_tokens": max_tokens,
         }
         start = time.monotonic()
-        async with httpx.AsyncClient(base_url=GROQ_BASE_URL, timeout=60.0) as client:
-            response = await client.post("/chat/completions", json=body, headers=headers)
+        with httpx.Client(base_url=GROQ_BASE_URL, timeout=60.0) as client:
+            response = client.post("/chat/completions", json=body, headers=headers)
         latency_ms = int((time.monotonic() - start) * 1000)
 
         if response.status_code != 200:

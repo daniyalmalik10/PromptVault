@@ -1,4 +1,3 @@
-from asgiref.sync import async_to_sync
 from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -53,7 +52,7 @@ class ExecutionListCreateView(APIView):
         latency_ms = None
 
         try:
-            result = async_to_sync(provider.complete)(prompt_text=prompt.content, model=model)
+            result = provider.complete(prompt_text=prompt.content, model=model)
             result_text = result.text
             input_tokens = result.input_tokens
             output_tokens = result.output_tokens
