@@ -12,13 +12,25 @@ export default function ExecutionHistory({ promptId, refreshTick }: Props) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    setError(null);
+    let active = true;
     executionsApi
       .list({ prompt_id: promptId })
-      .then((res) => setExecutions(res.data))
-      .catch(() => setError("Failed to load execution history."))
-      .finally(() => setIsLoading(false));
+      .then((res) => {
+        if (active) {
+          setExecutions(res.data);
+          setError(null);
+          setIsLoading(false);
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setError("Failed to load execution history.");
+          setIsLoading(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
   }, [promptId, refreshTick]);
 
   if (isLoading) {

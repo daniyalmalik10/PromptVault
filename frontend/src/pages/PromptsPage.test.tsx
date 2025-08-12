@@ -11,6 +11,10 @@ vi.mock("../hooks/usePrompts", () => ({
   usePrompts: () => mockUsePrompts(),
 }));
 
+vi.mock("../api/providers", () => ({
+  providersApi: { health: () => new Promise(() => {}) },
+}));
+
 import PromptsPage from "./PromptsPage";
 
 const defaultData = {

@@ -18,6 +18,7 @@ class OpenRouterProvider(LLMProvider):
         prompt_text: str,
         model: str,
         max_tokens: int = 1024,
+        timeout: float = 60.0,
     ) -> CompletionResult:
         headers = {
             "Authorization": f"Bearer {self._api_key}",
@@ -30,7 +31,7 @@ class OpenRouterProvider(LLMProvider):
             "max_tokens": max_tokens,
         }
         start = time.monotonic()
-        with httpx.Client(base_url=OPENROUTER_BASE_URL, timeout=60.0) as client:
+        with httpx.Client(base_url=OPENROUTER_BASE_URL, timeout=timeout) as client:
             response = client.post("/chat/completions", json=body, headers=headers)
         latency_ms = int((time.monotonic() - start) * 1000)
 

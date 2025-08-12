@@ -17,4 +17,5 @@ class LLMProvider(ABC):
         prompt_text: str,
         model: str,
         max_tokens: int = 1024,
+        timeout: float = 60.0,
     ) -> CompletionResult: ...
