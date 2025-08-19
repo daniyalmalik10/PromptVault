@@ -1,4 +1,10 @@
+from datetime import timedelta
+
+from django.db.models import Avg, Count, Sum
+from django.db.models.functions import TruncDate
+from django.utils import timezone
 from rest_framework import status
+from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -77,3 +83,47 @@ class ExecutionListCreateView(APIView):
 
         response_serializer = ExecutionSerializer(execution)
         return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+
+
+def _window_stats(qs, days: int) -> dict:
+    since = timezone.now() - timedelta(days=days)
+    window = qs.filter(created_at__gte=since)
+
+    total = window.count()
+    success_count = window.filter(status=Execution.Status.SUCCESS).count()
+    success_rate = round(success_count / total, 4) if total else 0.0
+
+    avg_latency = window.filter(status=Execution.Status.SUCCESS).aggregate(
+        avg=Avg("latency_ms")
+    )["avg"]
+
+    tokens_by_provider: dict[str, int] = {}
+    for provider in Execution.Provider.values:
+        agg = window.filter(provider=provider).aggregate(
+            input=Sum("input_tokens"), output=Sum("output_tokens")
+        )
+        tokens_by_provider[provider] = (agg["input"] or 0) + (agg["output"] or 0)
+
+    executions_by_day = [
+        {"date": str(row["date"]), "count": row["count"]}
+        for row in (
+            window.annotate(date=TruncDate("created_at"))
+            .values("date")
+            .annotate(count=Count("id"))
+            .order_by("date")
+        )
+    ]
+
+    return {
+        "total_executions": total,
+        "success_rate": success_rate,
+        "avg_latency_ms": round(avg_latency) if avg_latency is not None else None,
+        "tokens_by_provider": tokens_by_provider,
+        "executions_by_day": executions_by_day,
+    }
+
+
+@api_view(["GET"])
+def execution_stats(request: Request) -> Response:
+    qs = Execution.objects.filter(prompt__user=request.user)
+    return Response({"7d": _window_stats(qs, 7), "30d": _window_stats(qs, 30)})

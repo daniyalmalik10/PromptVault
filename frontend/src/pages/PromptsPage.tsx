@@ -48,6 +48,12 @@ export default function PromptsPage() {
           <div className="flex items-center gap-4">
             <ProviderStatus />
             <Link
+              to="/dashboard"
+              className="text-sm text-gray-600 hover:text-indigo-600"
+            >
+              Dashboard
+            </Link>
+            <Link
               to="/prompts/new"
               className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700"
             >

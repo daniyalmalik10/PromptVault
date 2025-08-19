@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import DashboardPage from "./pages/DashboardPage";
 import LoginPage from "./pages/LoginPage";
 import PromptDetailPage from "./pages/PromptDetailPage";
 import PromptNewPage from "./pages/PromptNewPage";
@@ -18,6 +19,7 @@ function App() {
           <Route path="/prompts" element={<PromptsPage />} />
           <Route path="/prompts/new" element={<PromptNewPage />} />
           <Route path="/prompts/:id" element={<PromptDetailPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
