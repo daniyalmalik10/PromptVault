@@ -87,7 +87,7 @@ describe("RegisterPage", () => {
     );
   });
 
-  it("shows fallback error on unknown failure", async () => {
+  it("shows server unreachable error when no response", async () => {
     mockRegister.mockRejectedValue({});
     renderPage();
     await fillForm("a@b.com", "password123", "password123");
@@ -95,7 +95,7 @@ describe("RegisterPage", () => {
 
     await waitFor(() =>
       expect(
-        screen.getByText("Registration failed. Please try again.")
+        screen.getByText("Cannot reach server. Make sure the backend is running.")
       ).toBeInTheDocument()
     );
   });

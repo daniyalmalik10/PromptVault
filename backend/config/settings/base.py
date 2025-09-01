@@ -63,7 +63,7 @@ ASGI_APPLICATION = "config.asgi.application"
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=config("DATABASE_URL", default="postgres://promptvault:promptvault@db:5432/promptvault")
+        default=config("DATABASE_URL", default="postgres://promptvault:promptvault@127.0.0.1:5432/promptvault")
     )
 }
 

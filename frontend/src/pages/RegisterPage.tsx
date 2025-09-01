@@ -26,13 +26,21 @@ export default function RegisterPage() {
       await register(email, password);
       navigate("/");
     } catch (err: unknown) {
-      const data = (err as { response?: { data?: Record<string, unknown> } })?.response?.data;
-      if (data?.email && Array.isArray(data.email)) {
-        setError((data.email as string[])[0]);
-      } else if (data?.detail) {
-        setError(data.detail as string);
+      const response = (err as { response?: { data?: Record<string, unknown> } })?.response;
+      if (!response) {
+        setError("Cannot reach server. Make sure the backend is running.");
       } else {
-        setError("Registration failed. Please try again.");
+        const data = response.data;
+        if (data?.detail) {
+          setError(data.detail as string);
+        } else if (data && typeof data === "object") {
+          const firstFieldError = Object.values(data).find((v) => Array.isArray(v)) as
+            | string[]
+            | undefined;
+          setError(firstFieldError?.[0] ?? "Registration failed. Please try again.");
+        } else {
+          setError("Registration failed. Please try again.");
+        }
       }
     } finally {
       setIsSubmitting(false);
