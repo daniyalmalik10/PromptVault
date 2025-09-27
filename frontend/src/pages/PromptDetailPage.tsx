@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { Navbar } from "../components/Navbar";
 import { promptsApi, type Prompt } from "../api/prompts";
 import ExecutionHistory from "../components/ExecutionHistory";
 import ExecutionPanel from "../components/ExecutionPanel";
@@ -100,7 +101,8 @@ export default function PromptDetailPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="flex items-center gap-3 mb-6">
+        <Navbar />
+        <div className="flex items-center gap-3 mb-4">
           <Link to="/prompts" className="text-sm text-indigo-600 hover:underline">
             ← Back
           </Link>

@@ -34,7 +34,7 @@ def make_execution(prompt, provider="groq", status=Execution.Status.SUCCESS, day
     e = Execution.objects.create(
         prompt=prompt,
         provider=provider,
-        model="llama3-8b-8192",
+        model="llama-3.1-8b-instant",
         status=status,
         result_text="ok",
         input_tokens=kwargs.get("input_tokens", 10),

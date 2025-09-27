@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { Navbar } from "../components/Navbar";
 import { ProviderStatus } from "../components/ProviderStatus";
 import { usePrompts } from "../hooks/usePrompts";
 
@@ -43,8 +44,7 @@ export default function PromptsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-3xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">PromptVault</h1>
+        <Navbar>
           <div className="flex items-center gap-4">
             <ProviderStatus />
             <Link
@@ -60,7 +60,7 @@ export default function PromptsPage() {
               New prompt
             </Link>
           </div>
-        </div>
+        </Navbar>
 
         <input
           type="text"

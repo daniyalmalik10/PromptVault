@@ -27,7 +27,7 @@ describe("executionsApi", () => {
   });
 
   it("create calls POST /executions/ with full payload", () => {
-    const payload = { prompt_id: 1, provider: "groq" as const, model: "llama3-8b-8192" };
+    const payload = { prompt_id: 1, provider: "groq" as const, model: "llama-3.1-8b-instant" };
     executionsApi.create(payload);
     expect(mockPost).toHaveBeenCalledWith("/executions/", payload);
   });

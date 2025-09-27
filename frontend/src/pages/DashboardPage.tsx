@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Navbar } from "../components/Navbar";
 import {
   Bar,
   BarChart,
@@ -38,8 +39,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+        <Navbar>
           <div className="flex rounded-md border border-gray-300 overflow-hidden text-sm">
             {(["7d", "30d"] as Window[]).map((w) => (
               <button
@@ -55,7 +55,7 @@ export default function DashboardPage() {
               </button>
             ))}
           </div>
-        </div>
+        </Navbar>
 
         {/* KPI cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">

@@ -13,7 +13,7 @@ const successExecution = {
   id: 1,
   prompt: 1,
   provider: "groq" as const,
-  model: "llama3-8b-8192",
+  model: "llama-3.1-8b-instant",
   status: "success" as const,
   result_text: "The answer.",
   input_tokens: 5,
@@ -45,10 +45,10 @@ describe("ExecutionPanel", () => {
     expect(screen.getByRole("button", { name: /run/i })).toBeInTheDocument();
   });
 
-  it("defaults to groq provider and llama3-8b-8192 model", () => {
+  it("defaults to groq provider and llama-3.1-8b-instant model", () => {
     renderPanel();
     expect(screen.getByRole("combobox")).toHaveValue("groq");
-    expect(screen.getByRole("textbox")).toHaveValue("llama3-8b-8192");
+    expect(screen.getByRole("textbox")).toHaveValue("llama-3.1-8b-instant");
   });
 
   it("changing provider to openrouter resets model to openai/gpt-4o-mini", async () => {
@@ -65,7 +65,7 @@ describe("ExecutionPanel", () => {
       expect(mockedApi.create).toHaveBeenCalledWith({
         prompt_id: 1,
         provider: "groq",
-        model: "llama3-8b-8192",
+        model: "llama-3.1-8b-instant",
       })
     );
   });

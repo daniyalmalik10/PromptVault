@@ -12,7 +12,7 @@ const makeExecution = (overrides = {}) => ({
   id: 1,
   prompt: 1,
   provider: "groq" as const,
-  model: "llama3-8b-8192",
+  model: "llama-3.1-8b-instant",
   status: "success" as const,
   result_text: "The answer to everything.",
   input_tokens: 5,
@@ -40,7 +40,7 @@ describe("ExecutionHistory", () => {
     } as never);
     renderHistory();
     await waitFor(() => expect(screen.getByText("Execution History")).toBeInTheDocument());
-    expect(screen.getAllByText(/groq \/ llama3-8b-8192/i)).toHaveLength(2);
+    expect(screen.getAllByText(/groq \/ llama-3.1-8b-instant/i)).toHaveLength(2);
   });
 
   it("shows empty state when no executions", async () => {

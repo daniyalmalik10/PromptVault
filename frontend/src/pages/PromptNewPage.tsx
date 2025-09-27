@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Navbar } from "../components/Navbar";
 import { promptsApi } from "../api/prompts";
 
 export default function PromptNewPage() {
@@ -40,6 +41,7 @@ export default function PromptNewPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-2xl mx-auto px-4 py-8">
+        <Navbar />
         <div className="flex items-center gap-3 mb-6">
           <Link to="/prompts" className="text-sm text-indigo-600 hover:underline">
             ← Back

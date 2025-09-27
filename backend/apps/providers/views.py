@@ -10,7 +10,7 @@ _cache: list = []
 _cache_ts: float = 0.0
 _CACHE_TTL = 60.0
 _CANARY = "Reply with the single word: ok"
-_CANARY_MODELS = {"groq": "llama3-8b-8192", "openrouter": "openai/gpt-4o-mini"}
+_CANARY_MODELS = {"groq": "llama-3.1-8b-instant", "openrouter": "openai/gpt-4o-mini"}
 
 
 @api_view(["GET"])
@@ -23,7 +23,7 @@ def provider_health_check(request):
 
     results = []
     for name in registry.names():
-        model = _CANARY_MODELS.get(name, "llama3-8b-8192")
+        model = _CANARY_MODELS.get(name, "llama-3.1-8b-instant")
         try:
             result = registry.get(name).complete(_CANARY, model, max_tokens=5, timeout=5.0)
             results.append({"provider": name, "status": "ok", "latency_ms": result.latency_ms})

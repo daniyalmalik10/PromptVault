@@ -55,7 +55,7 @@ async def test_full_user_flow():
         with patch("apps.executions.views.registry.get", return_value=_mock_provider()):
             r = await client.post(
                 "/api/executions/",
-                json={"prompt_id": pid, "provider": "groq", "model": "llama3-8b-8192"},
+                json={"prompt_id": pid, "provider": "groq", "model": "llama-3.1-8b-instant"},
                 headers=h,
             )
         assert r.status_code == 201

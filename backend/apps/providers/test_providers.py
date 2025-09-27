@@ -38,7 +38,7 @@ class TestGroqProvider:
     def test_complete_success_returns_result(self, provider):
         ctx, _ = _mock_client(_make_response(200, COMPLETION_RESPONSE))
         with patch("apps.providers.groq.httpx.Client", return_value=ctx):
-            result = provider.complete("Say hello", "llama3-8b-8192")
+            result = provider.complete("Say hello", "llama-3.1-8b-instant")
 
         assert isinstance(result, CompletionResult)
         assert result.text == "Hello world"
@@ -49,10 +49,10 @@ class TestGroqProvider:
     def test_complete_sends_correct_body_and_auth_header(self, provider):
         ctx, client = _mock_client(_make_response(200, COMPLETION_RESPONSE))
         with patch("apps.providers.groq.httpx.Client", return_value=ctx):
-            provider.complete("My prompt", "llama3-8b-8192", max_tokens=512)
+            provider.complete("My prompt", "llama-3.1-8b-instant", max_tokens=512)
 
         call_kwargs = client.post.call_args.kwargs
-        assert call_kwargs["json"]["model"] == "llama3-8b-8192"
+        assert call_kwargs["json"]["model"] == "llama-3.1-8b-instant"
         assert call_kwargs["json"]["messages"][0]["content"] == "My prompt"
         assert call_kwargs["json"]["max_tokens"] == 512
         assert call_kwargs["headers"]["Authorization"] == "Bearer test-key"

@@ -15,8 +15,8 @@ class TestExecutionStr:
         execution = Execution.objects.create(
             prompt=prompt,
             provider="groq",
-            model="llama3-8b-8192",
+            model="llama-3.1-8b-instant",
             status=Execution.Status.SUCCESS,
             result_text="ok",
         )
-        assert str(execution) == f"Execution(groq/llama3-8b-8192) on Prompt({prompt.pk})"
+        assert str(execution) == f"Execution(groq/llama-3.1-8b-instant) on Prompt({prompt.pk})"

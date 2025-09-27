@@ -25,7 +25,7 @@ class TestExecutionCreate:
     def test_unauthenticated_returns_401(self, client, prompt):
         res = client.post(
             EXECUTIONS_URL,
-            {"prompt_id": prompt.pk, "provider": "groq", "model": "llama3-8b-8192"},
+            {"prompt_id": prompt.pk, "provider": "groq", "model": "llama-3.1-8b-instant"},
             format="json",
         )
         assert res.status_code == 401
@@ -49,7 +49,7 @@ class TestExecutionCreate:
         with patch("apps.executions.views.registry.get", return_value=mock_provider()):
             res = auth_client.post(
                 EXECUTIONS_URL,
-                {"prompt_id": other_prompt.pk, "provider": "groq", "model": "llama3-8b-8192"},
+                {"prompt_id": other_prompt.pk, "provider": "groq", "model": "llama-3.1-8b-instant"},
                 format="json",
             )
         assert res.status_code == 404
@@ -58,7 +58,7 @@ class TestExecutionCreate:
         with patch("apps.executions.views.registry.get", return_value=mock_provider("The answer.")):
             res = auth_client.post(
                 EXECUTIONS_URL,
-                {"prompt_id": prompt.pk, "provider": "groq", "model": "llama3-8b-8192"},
+                {"prompt_id": prompt.pk, "provider": "groq", "model": "llama-3.1-8b-instant"},
                 format="json",
             )
         assert res.status_code == 201
@@ -72,7 +72,7 @@ class TestExecutionCreate:
         with patch("apps.executions.views.registry.get", return_value=mock_provider()):
             auth_client.post(
                 EXECUTIONS_URL,
-                {"prompt_id": prompt.pk, "provider": "groq", "model": "llama3-8b-8192"},
+                {"prompt_id": prompt.pk, "provider": "groq", "model": "llama-3.1-8b-instant"},
                 format="json",
             )
         assert Execution.objects.filter(prompt=prompt).count() == 1
@@ -85,7 +85,7 @@ class TestExecutionCreate:
         with patch("apps.executions.views.registry.get", return_value=failing):
             res = auth_client.post(
                 EXECUTIONS_URL,
-                {"prompt_id": prompt.pk, "provider": "groq", "model": "llama3-8b-8192"},
+                {"prompt_id": prompt.pk, "provider": "groq", "model": "llama-3.1-8b-instant"},
                 format="json",
             )
         assert res.status_code == 201
@@ -99,7 +99,7 @@ class TestExecutionCreate:
         with patch("apps.executions.views.registry.get", return_value=failing):
             res = auth_client.post(
                 EXECUTIONS_URL,
-                {"prompt_id": prompt.pk, "provider": "groq", "model": "llama3-8b-8192"},
+                {"prompt_id": prompt.pk, "provider": "groq", "model": "llama-3.1-8b-instant"},
                 format="json",
             )
         assert res.status_code == 201

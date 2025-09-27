@@ -20,6 +20,8 @@ class GroqProvider(LLMProvider):
         max_tokens: int = 1024,
         timeout: float = 60.0,
     ) -> CompletionResult:
+        if not self._api_key:
+            raise ProviderError("GROQ_API_KEY is not configured", status_code=500)
         headers = {
             "Authorization": f"Bearer {self._api_key}",
             "Content-Type": "application/json",

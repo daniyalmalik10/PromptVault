@@ -11,7 +11,7 @@ interface Props {
 }
 
 const DEFAULT_MODELS: Record<ProviderName, string> = {
-  groq: "llama3-8b-8192",
+  groq: "llama-3.1-8b-instant",
   openrouter: "openai/gpt-4o-mini",
 };
 
