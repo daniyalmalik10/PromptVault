@@ -11,3 +11,9 @@ target-version = ["py312"]
 DJANGO_SETTINGS_MODULE = "config.settings.test"
 python_files = ["test_*.py"]
 asyncio_mode = "auto"
+addopts = "--cov=apps --cov-report=term-missing --cov-fail-under=70"
+
+[dependency-groups]
+dev = [
+    "pytest-cov==5.0.0",
+]

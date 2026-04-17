@@ -89,7 +89,7 @@ jobs:
       - name: Test
         run: |
           cd frontend
-          pnpm exec vitest run
+          pnpm exec vitest run --coverage
 
       - name: Build
         run: |
